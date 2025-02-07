@@ -29,6 +29,15 @@ jobs:
             ${{ runner.OS }}-npm-cache
       - name: Install Dependencies
         run: npm install
+      # 新增步骤：获取 Next 主题（这里选择使用 git 克隆最新 master 分支，你可以根据需求修改）
+      - name: Get Next theme
+        run: |
+          mkdir -p themes/next
+          git clone https://github.com/theme-next/hexo-theme-next themes/next
+      # 新增步骤：完成配置，修改 Hexo 站点配置文件
+      - name: Configure Hexo theme
+        run: |
+          sed -i 's/^theme:.*/theme: next/' _config.yml
       - name: Build
         run: npm run build
       - name: Upload Pages artifact
